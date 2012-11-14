@@ -43,4 +43,9 @@ public class Cell {
 		return otherCell.getX() == getX() && otherCell.getY() == getY();
 	}
 	
+	@Override
+	public String toString() {
+		return getX() + ", " + getY() + ", " + getValue();  
+	}
+	
 }
