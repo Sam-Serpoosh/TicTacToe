@@ -27,8 +27,8 @@ public class Cell {
 		_value = value;
 	}
 	
-	public boolean isFilled() {
-		return _value != "";
+	public boolean isEmpty() {
+		return _value == "";
 	}
 	
 	public boolean isInSlant() {
@@ -46,6 +46,10 @@ public class Cell {
 	@Override
 	public String toString() {
 		return getX() + ", " + getY() + ", " + getValue();  
+	}
+
+	public boolean hasValue(String value) {
+		return getValue().equals(value);
 	}
 	
 }

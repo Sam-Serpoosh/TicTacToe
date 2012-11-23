@@ -1,0 +1,11 @@
+TODO:
+
+* WonChecker
+* computer blocks winning potential cell for player!
+* checking winning potentials for computer
+
+DONE:
+	* checking the winning potentials for player! -> DONE
+	* eliminate the duplication of X and O everywhere! -> DONE
+	* Cell.isEmpty() method should be added -> DONE
+	* Cell.hasValue("X" or "O") should be added! -> DONE

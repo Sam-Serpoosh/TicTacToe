@@ -21,7 +21,7 @@ public class GameBoard {
 	public boolean isEmpty() {
 		for (int row = 0; row < ROW_COUNT; row++)
 			for (int column = 0; column < COLUMN_COUNT; column++)
-				if (_cells[row][column].isFilled())
+				if (!_cells[row][column].isEmpty())
 					return false;
 		
 		return true;
@@ -73,6 +73,9 @@ public class GameBoard {
 	}
 	
 	private void setPlayerLastMove(int row, int column, String value) {
+		if (value.equals(PlayerMoves.O))
+			return;
+		
 		_playerLastMove = new Cell(row, column);
 		_playerLastMove.fill(value);
 	}

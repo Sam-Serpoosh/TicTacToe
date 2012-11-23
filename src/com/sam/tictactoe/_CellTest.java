@@ -8,8 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class _CellTest {
-	private static final String X = "X";
-	
 	private Cell _cell;
 	
 	@Before
@@ -24,21 +22,29 @@ public class _CellTest {
 	}
 	
 	@Test
-	public void isNotFilledAtCreation() {
-		assertFalse(_cell.isFilled());
+	public void isEmptyAtCreation() {
+		assertTrue(_cell.isEmpty());
 	}
 	
 	@Test
 	public void canFillsTheCell() {
-		_cell.fill(X);
-		assertTrue(_cell.isFilled());
+		_cell.fill(PlayerMoves.X);
+		assertFalse(_cell.isEmpty());
 	}
 	
 	@Test
 	public void canFetchValueOfTheCell() {
-		String x = X;
-		_cell.fill(x);
-		assertEquals(x, _cell.getValue());
+		_cell.fill(PlayerMoves.X);
+		assertEquals(PlayerMoves.X, _cell.getValue());
+	}
+	
+	@Test
+	public void canCheckItsValue() {
+		_cell.fill(PlayerMoves.X);
+		assertTrue(_cell.hasValue(PlayerMoves.X));
+		
+		_cell.fill(PlayerMoves.O);
+		assertTrue(_cell.hasValue(PlayerMoves.O));
 	}
 	
 	@Test
@@ -68,8 +74,8 @@ public class _CellTest {
 	@Test
 	public void toStringTest() {
 		Cell cell = new Cell(0, 1);
-		cell.fill(X);
-		assertEquals("0, 1, X", cell.toString());
+		cell.fill(PlayerMoves.X);
+		assertEquals("0, 1, " + PlayerMoves.X, cell.toString());
 	}
 
 }

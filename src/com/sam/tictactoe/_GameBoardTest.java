@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class _GameBoardTest {
-	private final static String X = "X";
 	private GameBoard _gameBoard;
 	
 	@Before
@@ -25,29 +24,34 @@ public class _GameBoardTest {
 	
 	@Test
 	public void detectsWhenBoardIsNotEmpty() {
-		_gameBoard.fillCell(0, 0, X);
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		assertFalse(_gameBoard.isEmpty());
 	}
 	
 	@Test
 	public void canResetTheGameBoard() {
-		_gameBoard.fillCell(0, 0, X);
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		_gameBoard.reset();
 		assertTrue(_gameBoard.isEmpty());
 	}
 	
 	@Test
 	public void canFillCellWithXOrO() {
-		_gameBoard.fillCell(0, 0, X);
-		assertEquals(X, _gameBoard.valueOf(0, 0));
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
+		assertEquals(PlayerMoves.X, _gameBoard.valueOf(0, 0));
 	}
 	
 	@Test
 	public void knowsPlayerLastMove() {
-		_gameBoard.fillCell(0, 0, X);
-		Cell playerMove = new Cell(0, 0);
-		playerMove.fill(X);
-		assertEquals(playerMove, _gameBoard.getPlayerLastMove());
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
+		assertEquals(new Cell(0, 0), _gameBoard.getPlayerLastMove());
+	}
+	
+	@Test
+	public void playerLastMoveDoesNotChangeAfterOpponentMove() {
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
+		_gameBoard.fillCell(0, 1, PlayerMoves.O);
+		assertEquals(new Cell(0, 0), _gameBoard.getPlayerLastMove());
 	}
 	
 	@Test
