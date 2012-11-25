@@ -55,36 +55,12 @@ public class _GameBoardTest {
 	}
 	
 	@Test
-	public void getsNeighborsOfCellInTheRow() {
-		List<Cell> rowNeighbors = _gameBoard.getRowNeighborsOf(new Cell(0, 1));
-		assertEquals(2, rowNeighbors.size());
-		assertTrue(rowNeighbors.contains(new Cell(0, 0)));
-		assertTrue(rowNeighbors.contains(new Cell(0, 2)));
-		assertFalse(rowNeighbors.contains(new Cell(0, 1)));
-	}
-	
-	@Test
-	public void getsNeighborsOfCellInColumn() {
-		List<Cell> columnNeighbors = _gameBoard.getColumnNeighbors(new Cell(0, 2));
-		assertEquals(2, columnNeighbors.size());
-		assertTrue(columnNeighbors.contains(new Cell(1, 2)));
-		assertTrue(columnNeighbors.contains(new Cell(2, 2)));
-		assertFalse(columnNeighbors.contains(new Cell(0, 2)));
-	}
-	
-	@Test
-	public void thereIsNoSlantNeighborWhenTheCellIsNotInSlant() {
-		List<Cell> slantNeighbors = _gameBoard.getSlantNeighbors(new Cell(0, 1));
-		assertEquals(0, slantNeighbors.size());
-	}
-	
-	@Test
-	public void getsSlantNeighborsOfCell() {
-		List<Cell> slantNeighbors = _gameBoard.getSlantNeighbors(new Cell(1, 1));
-		assertEquals(2, slantNeighbors.size());
-		assertTrue(slantNeighbors.contains(new Cell(2, 2)));
-		assertTrue(slantNeighbors.contains(new Cell(0, 0)));
-		assertFalse(slantNeighbors.contains(new Cell(1, 1)));
+	public void getsEmptyCells() {
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
+		List<Cell> emptyCells = _gameBoard.getEmptyCells();
+		
+		assertEquals(8, emptyCells.size());
+		assertFalse(emptyCells.contains(new Cell(0, 0)));
 	}
 	
 }

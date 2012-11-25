@@ -65,10 +65,16 @@ public class _CellTest {
 	@Test
 	public void knowsWhenIsInSlantLine() {
 		Cell cell = new Cell(0, 1);
-		assertFalse(cell.isInSlant());
+		assertFalse(cell.isInEqualSlant());
 		
 		cell = new Cell(0, 0);
-		assertTrue(cell.isInSlant());
+		assertTrue(cell.isInEqualSlant());
+	}
+	
+	@Test
+	public void knowsWhenIsInNotEqualSlant() {
+		Cell cell = new Cell(2, 0);
+		assertTrue(cell.isInNotEqualSlant());
 	}
 	
 	@Test

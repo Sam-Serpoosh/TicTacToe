@@ -23,6 +23,10 @@ public class Cell {
 		return _value;
 	}
 	
+	public boolean hasValue(String value) {
+		return getValue().equals(value);
+	}
+	
 	public void fill(String value) {
 		_value = value;
 	}
@@ -31,8 +35,12 @@ public class Cell {
 		return _value == "";
 	}
 	
-	public boolean isInSlant() {
+	public boolean isInEqualSlant() {
 		return getX() == getY();
+	}
+	
+	public boolean isInCenter() {
+		return getX() == 1 && getY() == 1;
 	}
 	
 	@Override
@@ -48,8 +56,8 @@ public class Cell {
 		return getX() + ", " + getY() + ", " + getValue();  
 	}
 
-	public boolean hasValue(String value) {
-		return getValue().equals(value);
+	public boolean isInNotEqualSlant() {
+		return Math.abs(getX() - getY()) == 2;
 	}
 	
 }

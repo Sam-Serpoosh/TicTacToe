@@ -1,6 +1,8 @@
 package com.sam.tictactoe;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -84,6 +86,26 @@ public class _WinningPatternFinderTest {
 	}
 	
 	@Test
+	public void getsThePotentialWinningCellsOfCentralCell() {
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
+		_gameBoard.fillCell(2, 0, PlayerMoves.X);
+		_gameBoard.fillCell(1, 1, PlayerMoves.X);
+		List<Cell> potentialWinsInSlant = _patternFinder.getPotentialWinningCellsInSlant();
+		assertEquals(2, potentialWinsInSlant.size());
+		assertTrue(potentialWinsInSlant.contains(new Cell(0, 2)));
+		assertTrue(potentialWinsInSlant.contains(new Cell(2, 2)));
+	}
+	
+	@Test
+	public void getsThePotentialWinningCellsInSlantOtherWay() {
+		_gameBoard.fillCell(0, 2, PlayerMoves.X);
+		_gameBoard.fillCell(2, 0, PlayerMoves.X);
+		List<Cell> potentialWinsInSlant = _patternFinder.getPotentialWinningCellsInSlant();
+		assertEquals(1, potentialWinsInSlant.size());
+		assertEquals(new Cell(1, 1), potentialWinsInSlant.get(0));
+	}
+	
+	@Test
 	public void getsThePotentialWinningCellsForPlayerAfterTheLastMove() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		_gameBoard.fillCell(1, 1, PlayerMoves.O);
@@ -93,6 +115,12 @@ public class _WinningPatternFinderTest {
 		List<Cell> potentialWins = _patternFinder.getPotentialWinningCells();
 		assertEquals(1, potentialWins.size());
 		assertEquals(new Cell(0, 2), potentialWins.get(0));
+	}
+	
+	@Test
+	public void knowsWhenThereIsNoPotentialWinningCells() {
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
+		assertFalse(_patternFinder.anyPotentialWinningCells());
 	}
 	
 }
