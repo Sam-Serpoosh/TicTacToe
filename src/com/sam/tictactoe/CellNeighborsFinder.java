@@ -10,7 +10,7 @@ public class CellNeighborsFinder {
 		_gameBoard = gameBoard;
 	}
 
-	public List<Cell> getRowNeighborsOf(Cell cell) {
+	public List<Cell> rowNeighborsOf(Cell cell) {
 		List<Cell> rowNeighbors = new ArrayList<Cell>();
 		int row = cell.getX();
 		for (int column = 0; column < GameBoard.COLUMN_COUNT; column++)
@@ -20,7 +20,7 @@ public class CellNeighborsFinder {
 		return rowNeighbors;		
 	}
 	
-	public List<Cell> getColumnNeighbors(Cell cell) {
+	public List<Cell> columnNeighbors(Cell cell) {
 		List<Cell> columnNeighbors = new ArrayList<Cell>();
 		int column = cell.getY();
 		for (int row = 0; row < GameBoard.ROW_COUNT; row++)
@@ -39,15 +39,15 @@ public class CellNeighborsFinder {
 			return slantNeighbors;
 		}
 		if (cell.isInNotEqualSlant()) {
-			slantNeighbors.addAll(getNeighborsOfNotEqualSlant(cell));
+			slantNeighbors.addAll(neighborsInNotEqualSlant(cell));
 			return slantNeighbors;
 		}
-		slantNeighbors.addAll(getNeighborsInEqualSlant(cell));
+		slantNeighbors.addAll(neighborsInEqualSlant(cell));
 		
 		return slantNeighbors;
 	}
 
-	public List<Cell> getNeighborsInEqualSlant(Cell cell) {
+	public List<Cell> neighborsInEqualSlant(Cell cell) {
 		List<Cell> equalSlantNeighbors = new ArrayList<Cell>();
 		for (int row = 0; row < GameBoard.ROW_COUNT; row++)
 			if (!_gameBoard.cellAt(row, row).equals(cell))
@@ -67,7 +67,7 @@ public class CellNeighborsFinder {
 		return centralCellNeighbors;
 	}
 	
-	public List<Cell> getNeighborsOfNotEqualSlant(Cell cell) {
+	public List<Cell> neighborsInNotEqualSlant(Cell cell) {
 		List<Cell> notEqualSlantCellNeighbors = new ArrayList<Cell>();
 		for (int row = 0; row < GameBoard.ROW_COUNT; row++)
 			if (!_gameBoard.cellAt(row, GameBoard.ROW_COUNT - row - 1).equals(cell))

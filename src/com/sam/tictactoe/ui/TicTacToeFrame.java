@@ -3,25 +3,30 @@ package com.sam.tictactoe.ui;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import com.sam.tictactoe.GameBoard;
 
-public class GameBoardFrame extends JFrame {
+public class TicTacToeFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private GameBoard _gameBoard;
 	
-	public GameBoardFrame() {
+	public TicTacToeFrame() {
 		super("Tic Tac Toe Board");
 	}
 	
-	public GameBoardFrame(GameBoard gameBoard) {
+	public TicTacToeFrame(GameBoard gameBoard) {
 		this();
 		_gameBoard = gameBoard;
 	}
 	
 	public GameBoard getGameBoard() {
 		return _gameBoard;
+	}
+	
+	public void showPlayerWonMessage() {
+		JOptionPane.showMessageDialog(this, "Congratulation, You Won!");
 	}
 	
 	public void drawGameBoard() {

@@ -13,65 +13,70 @@ public class WinningPatternFinder {
 	}
 	
 	public boolean anyPotentialWinningCells() {
-		return getPotentialWinningCells().size() != 0;
+		return potentialWinningCells().size() != 0;
 	}
 	
-	public List<Cell> getPotentialWinningCells() {
+	public List<Cell> potentialWinningCells() {
 		List<Cell> potentialWins = new ArrayList<Cell>();
-		potentialWins.addAll(getPotentialWinningCellsInRow());
-		potentialWins.addAll(getPotentialWinningCellsInColumn());
-		potentialWins.addAll(getPotentialWinningCellsInSlant());
+		potentialWins.addAll(potentialWinningCellsInRow());
+		potentialWins.addAll(potentialWinningCellsInColumn());
+		potentialWins.addAll(potentialWinningCellsInSlant());
 		
 		return potentialWins;
 	}
 
-	public List<Cell> getPotentialWinningCellsInRow() {
-		List<Cell> neighbors = _cellNeighborsFinder.getRowNeighborsOf(_gameBoard.getPlayerLastMove());
-		return getPotentialWinnignCells(neighbors);
+	public List<Cell> potentialWinningCellsInRow() {
+		List<Cell> neighbors = _cellNeighborsFinder.rowNeighborsOf(_gameBoard.playerLastMove());
+		return potentialWinnignCellsIn(neighbors);
 	}
 	
-	public List<Cell> getPotentialWinningCellsInColumn() {
-		List<Cell> neighbors = _cellNeighborsFinder.getColumnNeighbors(_gameBoard.getPlayerLastMove());
-		return getPotentialWinnignCells(neighbors);
+	public List<Cell> potentialWinningCellsInColumn() {
+		List<Cell> neighbors = _cellNeighborsFinder.columnNeighbors(_gameBoard.playerLastMove());
+		return potentialWinnignCellsIn(neighbors);
 	}
 	
-	public List<Cell> getPotentialWinningCellsInSlant() {
-		Cell playerLastMove = _gameBoard.getPlayerLastMove();
+	public List<Cell> potentialWinningCellsInSlant() {
+		Cell playerLastMove = _gameBoard.playerLastMove();
+		if (playerLastMove.isInCenter())
+			return potentialWinningCellsForCentralCell(playerLastMove);
+		if (playerLastMove.isInEqualSlant())
+			return potentialWinningCellsInEqualSlant(playerLastMove);
+		
+		return potentialWinningCellsInNotEqualSlant(playerLastMove);
+	}
+
+	private List<Cell> potentialWinningCellsInNotEqualSlant(Cell playerLastMove) {
+		List<Cell> neighbors = _cellNeighborsFinder.neighborsInNotEqualSlant(playerLastMove);
+		return potentialWinnignCellsIn(neighbors);
+	}
+
+	private List<Cell> potentialWinningCellsInEqualSlant(Cell playerLastMove) {
+		List<Cell> neighbors = _cellNeighborsFinder.neighborsInEqualSlant(playerLastMove);
+		return potentialWinnignCellsIn(neighbors);
+	}
+
+	private List<Cell> potentialWinningCellsForCentralCell(Cell playerLastMove) {
 		List<Cell> potentialWinningCells = new ArrayList<Cell>();
-		if (playerLastMove.isInCenter()) {
-			List<Cell> neighbors = _cellNeighborsFinder.getNeighborsInEqualSlant(playerLastMove);
-			potentialWinningCells.addAll(getPotentialWinnignCells(neighbors));
-			neighbors = _cellNeighborsFinder.getNeighborsOfNotEqualSlant(playerLastMove);
-			potentialWinningCells.addAll(getPotentialWinnignCells(neighbors));
-		}
-		else {
-			if (playerLastMove.isInEqualSlant()) {
-				List<Cell> neighbors = _cellNeighborsFinder.getNeighborsInEqualSlant(playerLastMove);
-				potentialWinningCells.addAll(getPotentialWinnignCells(neighbors));
-			}
-			else if (playerLastMove.isInNotEqualSlant()) {
-				List<Cell> neighbors = _cellNeighborsFinder.getNeighborsOfNotEqualSlant(playerLastMove);
-				potentialWinningCells.addAll(getPotentialWinnignCells(neighbors));
-			}
-		}
+		potentialWinningCells.addAll(potentialWinningCellsInEqualSlant(playerLastMove));
+		potentialWinningCells.addAll(potentialWinningCellsInNotEqualSlant(playerLastMove));
 		
 		return potentialWinningCells;
 	}
 	
-	public List<Cell> getEmptyCells() {
-		return _gameBoard.getEmptyCells();
+	public List<Cell> emptyCells() {
+		return _gameBoard.emptyCells();
 	}
 	
-	private List<Cell> getPotentialWinnignCells(List<Cell> neighbors) {
+	private List<Cell> potentialWinnignCellsIn(List<Cell> neighbors) {
 		List<Cell> winningCells = new ArrayList<Cell>();
 		if (neighborsAreEmpty(neighbors) || neighborsFilledWithOpponent(neighbors))
 			return winningCells;
-		winningCells.add(neighborsWinningPotentialCell(neighbors));
+		winningCells.add(potentialWinningCell(neighbors));
 		
 		return winningCells;
 	}
 
-	private Cell neighborsWinningPotentialCell(List<Cell> neighbors) {
+	private Cell potentialWinningCell(List<Cell> neighbors) {
 		if (neighbors.get(0).hasValue(PlayerMoves.X))
 			return neighbors.get(1);
 		

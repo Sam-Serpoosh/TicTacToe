@@ -1,6 +1,5 @@
 package com.sam.tictactoe;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -28,7 +27,7 @@ public class _ComputerPlayerTest {
 		List<Cell> winningPotentialCells = new ArrayList<Cell>();
 		winningPotentialCells.add(potentialWinCell);
 		when(_patternFinder.anyPotentialWinningCells()).thenReturn(true);
-		when(_patternFinder.getPotentialWinningCells()).thenReturn(winningPotentialCells);
+		when(_patternFinder.potentialWinningCells()).thenReturn(winningPotentialCells);
 		_computerPlayer.play();
 		
 		assertFalse(potentialWinCell.isEmpty());

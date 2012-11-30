@@ -44,20 +44,20 @@ public class _GameBoardTest {
 	@Test
 	public void knowsPlayerLastMove() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
-		assertEquals(new Cell(0, 0), _gameBoard.getPlayerLastMove());
+		assertEquals(new Cell(0, 0), _gameBoard.playerLastMove());
 	}
 	
 	@Test
 	public void playerLastMoveDoesNotChangeAfterOpponentMove() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		_gameBoard.fillCell(0, 1, PlayerMoves.O);
-		assertEquals(new Cell(0, 0), _gameBoard.getPlayerLastMove());
+		assertEquals(new Cell(0, 0), _gameBoard.playerLastMove());
 	}
 	
 	@Test
 	public void getsEmptyCells() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
-		List<Cell> emptyCells = _gameBoard.getEmptyCells();
+		List<Cell> emptyCells = _gameBoard.emptyCells();
 		
 		assertEquals(8, emptyCells.size());
 		assertFalse(emptyCells.contains(new Cell(0, 0)));

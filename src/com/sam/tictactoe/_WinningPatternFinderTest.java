@@ -22,7 +22,7 @@ public class _WinningPatternFinderTest {
 	@Test
 	public void whenRowNeighborsOfCellAreEmptyThereIsNoWinningPotential() {
 		_gameBoard.fillCell(0, 1, PlayerMoves.X);
-		List<Cell> potentialWinsInRow = _patternFinder.getPotentialWinningCellsInRow();
+		List<Cell> potentialWinsInRow = _patternFinder.potentialWinningCellsInRow();
 		assertEquals(0, potentialWinsInRow.size());
 	}
 	
@@ -30,7 +30,7 @@ public class _WinningPatternFinderTest {
 	public void whenRowNeighborsOfCellFilledWihtOpponentThereIsNoWinningPotential() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		_gameBoard.fillCell(0, 1, PlayerMoves.O);
-		List<Cell> potentialWinsInRow = _patternFinder.getPotentialWinningCellsInRow();
+		List<Cell> potentialWinsInRow = _patternFinder.potentialWinningCellsInRow();
 		assertEquals(0, potentialWinsInRow.size());
 	}
 	
@@ -38,7 +38,7 @@ public class _WinningPatternFinderTest {
 	public void getsThePotentialWinningCellInRow() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		_gameBoard.fillCell(0, 2, PlayerMoves.X);
-		List<Cell> potentialWinsInRow = _patternFinder.getPotentialWinningCellsInRow();
+		List<Cell> potentialWinsInRow = _patternFinder.potentialWinningCellsInRow();
 		assertEquals(1, potentialWinsInRow.size());
 		assertEquals(new Cell(0, 1), potentialWinsInRow.get(0));
 	}
@@ -46,7 +46,7 @@ public class _WinningPatternFinderTest {
 	@Test
 	public void whenColumnNeighborsOfCellAreEmptyThereIsNoWinningPotential() {
 		_gameBoard.fillCell(0, 1, PlayerMoves.X);
-		List<Cell> potentialWinsInColumn = _patternFinder.getPotentialWinningCellsInColumn();
+		List<Cell> potentialWinsInColumn = _patternFinder.potentialWinningCellsInColumn();
 		assertEquals(0, potentialWinsInColumn.size());
 	}
 	
@@ -54,7 +54,7 @@ public class _WinningPatternFinderTest {
 	public void whenColumnNeighborsOfCellFilledWithOpponentThereIsNoWinningPotential() {
 		_gameBoard.fillCell(0, 1, PlayerMoves.X);
 		_gameBoard.fillCell(2, 1, PlayerMoves.O);
-		List<Cell> potentialWinsInColumn = _patternFinder.getPotentialWinningCellsInColumn();
+		List<Cell> potentialWinsInColumn = _patternFinder.potentialWinningCellsInColumn();
 		assertEquals(0, potentialWinsInColumn.size());
 	}
 	
@@ -62,7 +62,7 @@ public class _WinningPatternFinderTest {
 	public void getsThePotentialWinningCellsInColumn() {
 		_gameBoard.fillCell(0, 1, PlayerMoves.X);
 		_gameBoard.fillCell(2, 1, PlayerMoves.X);
-		List<Cell> potentialWinsInColumn = _patternFinder.getPotentialWinningCellsInColumn();
+		List<Cell> potentialWinsInColumn = _patternFinder.potentialWinningCellsInColumn();
 		assertEquals(1, potentialWinsInColumn.size());
 		assertEquals(new Cell(1, 1), potentialWinsInColumn.get(0));
 	}
@@ -72,7 +72,7 @@ public class _WinningPatternFinderTest {
 		_gameBoard.fillCell(1, 2, PlayerMoves.X);
 		_gameBoard.fillCell(1, 0, PlayerMoves.O);
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
-		List<Cell> potentialWinsInSlant = _patternFinder.getPotentialWinningCellsInSlant();
+		List<Cell> potentialWinsInSlant = _patternFinder.potentialWinningCellsInSlant();
 		assertEquals(0, potentialWinsInSlant.size());
 	}
 	
@@ -80,7 +80,7 @@ public class _WinningPatternFinderTest {
 	public void getsThePotentialWinningCellsInSlant() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		_gameBoard.fillCell(2, 2, PlayerMoves.X);
-		List<Cell> potentialWinsInSlant = _patternFinder.getPotentialWinningCellsInSlant();
+		List<Cell> potentialWinsInSlant = _patternFinder.potentialWinningCellsInSlant();
 		assertEquals(1, potentialWinsInSlant.size());
 		assertEquals(new Cell(1, 1), potentialWinsInSlant.get(0));
 	}
@@ -90,7 +90,7 @@ public class _WinningPatternFinderTest {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		_gameBoard.fillCell(2, 0, PlayerMoves.X);
 		_gameBoard.fillCell(1, 1, PlayerMoves.X);
-		List<Cell> potentialWinsInSlant = _patternFinder.getPotentialWinningCellsInSlant();
+		List<Cell> potentialWinsInSlant = _patternFinder.potentialWinningCellsInSlant();
 		assertEquals(2, potentialWinsInSlant.size());
 		assertTrue(potentialWinsInSlant.contains(new Cell(0, 2)));
 		assertTrue(potentialWinsInSlant.contains(new Cell(2, 2)));
@@ -100,7 +100,7 @@ public class _WinningPatternFinderTest {
 	public void getsThePotentialWinningCellsInSlantOtherWay() {
 		_gameBoard.fillCell(0, 2, PlayerMoves.X);
 		_gameBoard.fillCell(2, 0, PlayerMoves.X);
-		List<Cell> potentialWinsInSlant = _patternFinder.getPotentialWinningCellsInSlant();
+		List<Cell> potentialWinsInSlant = _patternFinder.potentialWinningCellsInSlant();
 		assertEquals(1, potentialWinsInSlant.size());
 		assertEquals(new Cell(1, 1), potentialWinsInSlant.get(0));
 	}
@@ -112,7 +112,7 @@ public class _WinningPatternFinderTest {
 		_gameBoard.fillCell(1, 2, PlayerMoves.X);
 		_gameBoard.fillCell(1, 0, PlayerMoves.O);
 		_gameBoard.fillCell(2, 2, PlayerMoves.X);
-		List<Cell> potentialWins = _patternFinder.getPotentialWinningCells();
+		List<Cell> potentialWins = _patternFinder.potentialWinningCells();
 		assertEquals(1, potentialWins.size());
 		assertEquals(new Cell(0, 2), potentialWins.get(0));
 	}

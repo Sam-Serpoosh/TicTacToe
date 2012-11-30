@@ -15,7 +15,7 @@ public class GameBoard {
 		fillBoardWithEmptyCells();
 	}
 	
-	public Cell getPlayerLastMove() {
+	public Cell playerLastMove() {
 		return _playerLastMove;
 	}
 
@@ -59,7 +59,7 @@ public class GameBoard {
 				_cells[row][column] = new Cell(row, column);
 	}
 
-	public List<Cell> getEmptyCells() {
+	public List<Cell> emptyCells() {
 		List<Cell> emptyCells = new ArrayList<Cell>();
 		for (int row = 0; row < ROW_COUNT; row++)
 			for (int column = 0; column < COLUMN_COUNT; column++)

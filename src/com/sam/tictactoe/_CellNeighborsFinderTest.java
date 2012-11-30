@@ -20,7 +20,7 @@ public class _CellNeighborsFinderTest {
 
 	@Test
 	public void getsNeighborsOfCellInTheRow() {
-		List<Cell> rowNeighbors = _cellNeighborsFinder.getRowNeighborsOf(new Cell(0, 1));
+		List<Cell> rowNeighbors = _cellNeighborsFinder.rowNeighborsOf(new Cell(0, 1));
 		assertEquals(2, rowNeighbors.size());
 		assertTrue(rowNeighbors.contains(new Cell(0, 0)));
 		assertTrue(rowNeighbors.contains(new Cell(0, 2)));
@@ -29,7 +29,7 @@ public class _CellNeighborsFinderTest {
 	
 	@Test
 	public void getsNeighborsOfCellInColumn() {
-		List<Cell> columnNeighbors = _cellNeighborsFinder.getColumnNeighbors(new Cell(0, 2));
+		List<Cell> columnNeighbors = _cellNeighborsFinder.columnNeighbors(new Cell(0, 2));
 		assertEquals(2, columnNeighbors.size());
 		assertTrue(columnNeighbors.contains(new Cell(1, 2)));
 		assertTrue(columnNeighbors.contains(new Cell(2, 2)));

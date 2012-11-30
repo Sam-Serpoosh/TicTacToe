@@ -20,12 +20,12 @@ public class ComputerPlayer {
 	}
 
 	private void blockPotentialWin() {
-		List<Cell> potentialWinningCells = _patternFinder.getPotentialWinningCells();
+		List<Cell> potentialWinningCells = _patternFinder.potentialWinningCells();
 		potentialWinningCells.get(0).fill(PlayerMoves.O);
 	}
 	
 	private void playRandomMove() { //TODO: This will change completely!
-		List<Cell> emptyCells = _patternFinder.getEmptyCells();
+		List<Cell> emptyCells = _patternFinder.emptyCells();
 		if (emptyCells.size() == 0)
 			return;
 		int selectedCellPosition = _random.nextInt(emptyCells.size());

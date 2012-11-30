@@ -1,7 +1,7 @@
 TODO:
 
-* computer blocks winning potential cell for player!
-* simple UI for this much functionality so far!
+* computer blocks winning potential cell for player! -> DONE
+* simple UI for this much functionality so far! -> DONE
 * WonChecker/EndGameChecker!
 * checking winning potentials for computer
 * when there's no potential winning (just for now) randomly choose a cell to fill!
