@@ -12,6 +12,7 @@ public class CellNeighborsFinder {
 
 	public List<Cell> rowNeighborsOf(Cell cell) {
 		List<Cell> rowNeighbors = new ArrayList<Cell>();
+		
 		int row = cell.getX();
 		for (int column = 0; column < GameBoard.COLUMN_COUNT; column++)
 			if (!_gameBoard.cellAt(row, column).equals(cell))
@@ -20,8 +21,9 @@ public class CellNeighborsFinder {
 		return rowNeighbors;		
 	}
 	
-	public List<Cell> columnNeighbors(Cell cell) {
+	public List<Cell> columnNeighborsOf(Cell cell) {
 		List<Cell> columnNeighbors = new ArrayList<Cell>();
+		
 		int column = cell.getY();
 		for (int row = 0; row < GameBoard.ROW_COUNT; row++)
 			if (!_gameBoard.cellAt(row, column).equals(cell))
@@ -30,8 +32,9 @@ public class CellNeighborsFinder {
 		return columnNeighbors;
 	}
 	
-	public List<Cell> getSlantNeighbors(Cell cell) {
+	public List<Cell> slantNeighborsOf(Cell cell) {
 		List<Cell> slantNeighbors = new ArrayList<Cell>();
+		
 		if (!cell.isInEqualSlant() && !cell.isInNotEqualSlant())
 			return slantNeighbors;
 		if (cell.isInCenter()) {

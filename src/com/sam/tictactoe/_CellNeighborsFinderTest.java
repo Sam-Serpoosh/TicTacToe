@@ -17,7 +17,7 @@ public class _CellNeighborsFinderTest {
 	public void setup() {
 		_cellNeighborsFinder = new CellNeighborsFinder(new GameBoard());
 	}
-
+	
 	@Test
 	public void getsNeighborsOfCellInTheRow() {
 		List<Cell> rowNeighbors = _cellNeighborsFinder.rowNeighborsOf(new Cell(0, 1));
@@ -29,22 +29,23 @@ public class _CellNeighborsFinderTest {
 	
 	@Test
 	public void getsNeighborsOfCellInColumn() {
-		List<Cell> columnNeighbors = _cellNeighborsFinder.columnNeighbors(new Cell(0, 2));
+		List<Cell> columnNeighbors = _cellNeighborsFinder.columnNeighborsOf(new Cell(0, 2));
 		assertEquals(2, columnNeighbors.size());
 		assertTrue(columnNeighbors.contains(new Cell(1, 2)));
 		assertTrue(columnNeighbors.contains(new Cell(2, 2)));
 		assertFalse(columnNeighbors.contains(new Cell(0, 2)));
 	}
 	
+	
 	@Test
 	public void thereIsNoSlantNeighborWhenTheCellIsNotInSlant() {
-		List<Cell> slantNeighbors = _cellNeighborsFinder.getSlantNeighbors(new Cell(0, 1));
+		List<Cell> slantNeighbors = _cellNeighborsFinder.slantNeighborsOf(new Cell(0, 1));
 		assertEquals(0, slantNeighbors.size());
 	}
 	
 	@Test
 	public void getsAllSlantNeighborsOfCellInCenter() {
-		List<Cell> slantNeighbors = _cellNeighborsFinder.getSlantNeighbors(new Cell(1, 1));
+		List<Cell> slantNeighbors = _cellNeighborsFinder.slantNeighborsOf(new Cell(1, 1));
 		assertEquals(4, slantNeighbors.size());
 		assertTrue(slantNeighbors.contains(new Cell(2, 2)));
 		assertTrue(slantNeighbors.contains(new Cell(0, 0)));
@@ -55,7 +56,7 @@ public class _CellNeighborsFinderTest {
 	
 	@Test
 	public void gestNeighborsInNotEqualSlantOfCell() {
-		List<Cell> slantNeighbors = _cellNeighborsFinder.getSlantNeighbors(new Cell(2, 0));
+		List<Cell> slantNeighbors = _cellNeighborsFinder.slantNeighborsOf(new Cell(2, 0));
 		assertEquals(2, slantNeighbors.size());
 		assertTrue(slantNeighbors.contains(new Cell(0, 2)));
 		assertTrue(slantNeighbors.contains(new Cell(1, 1)));

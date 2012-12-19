@@ -97,4 +97,15 @@ public class _WinCheckerTest {
 		assertTrue(_winningChecker.playerWon());
 	}
 	
+	@Test
+	public void knowsWhenComputerWon() {
+		_gameBoard.fillCell(0, 0, PlayerMoves.O);
+		_gameBoard.fillCell(1, 1, PlayerMoves.X);
+		_gameBoard.fillCell(1, 0, PlayerMoves.O);
+		_gameBoard.fillCell(2, 2, PlayerMoves.X);
+		_gameBoard.fillCell(2, 0, PlayerMoves.O);
+		
+		assertTrue(_winningChecker.computerWon());
+	}
+	
 }

@@ -9,6 +9,7 @@ public class GameBoard {
 	
 	private Cell[][] _cells;
 	private Cell _playerLastMove;
+	private Cell _computerLastMove;
 	
 	public GameBoard() {
 		_cells = new Cell[ROW_COUNT][COLUMN_COUNT];
@@ -17,6 +18,10 @@ public class GameBoard {
 	
 	public Cell playerLastMove() {
 		return _playerLastMove;
+	}
+	
+	public Cell computerLastMove() {
+		return _computerLastMove;
 	}
 
 	public boolean isEmpty() {
@@ -35,6 +40,7 @@ public class GameBoard {
 	public void fillCell(int row, int column, String value) {
 		_cells[row][column].fill(value);
 		setPlayerLastMove(row, column, value);
+		setComputerLastMove(row, column, value);
 	}
 
 	public String valueOf(int row, int column) {
@@ -48,9 +54,15 @@ public class GameBoard {
 	private void setPlayerLastMove(int row, int column, String value) {
 		if (value.equals(PlayerMoves.O))
 			return;
-		
 		_playerLastMove = new Cell(row, column);
 		_playerLastMove.fill(value);
+	}
+	
+	private void setComputerLastMove(int row, int column, String value) {
+		if (value.equals(PlayerMoves.X))
+			return;
+		_computerLastMove = new Cell(row, column);
+		_computerLastMove.fill(value);
 	}
 
 	private void fillBoardWithEmptyCells() {

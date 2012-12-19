@@ -20,7 +20,7 @@ public class TicTacToeGame {
 		_gameBoard = _gameBoardFrame.getGameBoard();
 		_player = new Player(_gameBoard);
 		_winChecker = new WinChecker(_gameBoard, new CellNeighborsFinder(_gameBoard));
-		_computerPlayer = new ComputerPlayer(new WinningPatternFinder(_gameBoard));
+		_computerPlayer = new ComputerPlayer(new WinningPatternFinder(_gameBoard), _gameBoard);
 	}
 	
 	public static void nextMove(Cell cell) {
@@ -28,7 +28,7 @@ public class TicTacToeGame {
 		boolean playerWon = checkPlayerWon();
 		if (!playerWon)
 			_computerPlayer.play();
-		//TODO: winner checker for computer!
+		checkComputerWon();
 		_gameBoardFrame.drawGameBoard();
 	}
 	
@@ -38,8 +38,15 @@ public class TicTacToeGame {
 			_gameBoardFrame.showPlayerWonMessage();
 			resetGame();
 		}
-		
 		return playerWon;
+	}
+	
+	private static void checkComputerWon() {
+		boolean computerWon = _winChecker.computerWon();
+		if (computerWon) {
+			_gameBoardFrame.showPlayerLostMessage();
+			resetGame();
+		}
 	}
 	
 	public static void resetGame() {

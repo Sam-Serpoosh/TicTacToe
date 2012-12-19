@@ -6,53 +6,69 @@ import java.util.List;
 public class WinningPatternFinder {
 	private GameBoard _gameBoard;
 	private CellNeighborsFinder _cellNeighborsFinder;
-
 	public WinningPatternFinder(GameBoard gameBoard) {
+
 		_gameBoard = gameBoard;
 		_cellNeighborsFinder = new CellNeighborsFinder(_gameBoard);
 	}
 	
-	public boolean anyPotentialWinningCells() {
-		return potentialWinningCells().size() != 0;
+	public boolean anyPotentialWinningCellsForPlayer() {
+		return potentialWinningCellsForPlayer().size() != 0;
 	}
 	
-	public List<Cell> potentialWinningCells() {
+	public boolean anyPotentialWinningCellsForComputer() {
+		return potentialWinningCellsForComputer().size() != 0;
+	}
+	
+	public List<Cell> potentialWinningCellsForPlayer() {
+		Cell playerLastMove = _gameBoard.playerLastMove();
+		return potentialWinningCellsBasedOn(playerLastMove);
+	}
+	
+	public List<Cell> potentialWinningCellsForComputer() {
+		Cell computerLastMove = _gameBoard.computerLastMove();
+		if (computerLastMove == null)
+			return new ArrayList<Cell>();
+		
+		return potentialWinningCellsBasedOn(computerLastMove);
+	}
+	
+	private List<Cell> potentialWinningCellsBasedOn(Cell lastMove) {
 		List<Cell> potentialWins = new ArrayList<Cell>();
-		potentialWins.addAll(potentialWinningCellsInRow());
-		potentialWins.addAll(potentialWinningCellsInColumn());
-		potentialWins.addAll(potentialWinningCellsInSlant());
+		potentialWins.addAll(potentialWinningCellsInRowBasedOn(lastMove));
+		potentialWins.addAll(potentialWinningCellsInColumnBasedOn(lastMove));
+		potentialWins.addAll(potentialWinningCellsInSlantBasedOn(lastMove));
 		
 		return potentialWins;
 	}
 
-	public List<Cell> potentialWinningCellsInRow() {
-		List<Cell> neighbors = _cellNeighborsFinder.rowNeighborsOf(_gameBoard.playerLastMove());
-		return potentialWinnignCellsIn(neighbors);
+	public List<Cell> potentialWinningCellsInRowBasedOn(Cell lastMove) {
+		List<Cell> neighbors = _cellNeighborsFinder.rowNeighborsOf(lastMove);
+		return potentialWinnignCellsIn(neighbors, lastMove);
 	}
 	
-	public List<Cell> potentialWinningCellsInColumn() {
-		List<Cell> neighbors = _cellNeighborsFinder.columnNeighbors(_gameBoard.playerLastMove());
-		return potentialWinnignCellsIn(neighbors);
+	public List<Cell> potentialWinningCellsInColumnBasedOn(Cell lastMove) {
+		List<Cell> neighbors = _cellNeighborsFinder.columnNeighborsOf(lastMove);
+		return potentialWinnignCellsIn(neighbors, lastMove);
 	}
 	
-	public List<Cell> potentialWinningCellsInSlant() {
-		Cell playerLastMove = _gameBoard.playerLastMove();
-		if (playerLastMove.isInCenter())
-			return potentialWinningCellsForCentralCell(playerLastMove);
-		if (playerLastMove.isInEqualSlant())
-			return potentialWinningCellsInEqualSlant(playerLastMove);
+	public List<Cell> potentialWinningCellsInSlantBasedOn(Cell lastMove) {
+		if (lastMove.isInCenter())
+			return potentialWinningCellsForCentralCell(lastMove);
+		if (lastMove.isInEqualSlant())
+			return potentialWinningCellsInEqualSlant(lastMove);
 		
-		return potentialWinningCellsInNotEqualSlant(playerLastMove);
+		return potentialWinningCellsInNotEqualSlant(lastMove);
 	}
 
-	private List<Cell> potentialWinningCellsInNotEqualSlant(Cell playerLastMove) {
-		List<Cell> neighbors = _cellNeighborsFinder.neighborsInNotEqualSlant(playerLastMove);
-		return potentialWinnignCellsIn(neighbors);
+	private List<Cell> potentialWinningCellsInNotEqualSlant(Cell lastMove) {
+		List<Cell> neighbors = _cellNeighborsFinder.neighborsInNotEqualSlant(lastMove);
+		return potentialWinnignCellsIn(neighbors, lastMove);
 	}
 
-	private List<Cell> potentialWinningCellsInEqualSlant(Cell playerLastMove) {
-		List<Cell> neighbors = _cellNeighborsFinder.neighborsInEqualSlant(playerLastMove);
-		return potentialWinnignCellsIn(neighbors);
+	private List<Cell> potentialWinningCellsInEqualSlant(Cell lastMove) {
+		List<Cell> neighbors = _cellNeighborsFinder.neighborsInEqualSlant(lastMove);
+		return potentialWinnignCellsIn(neighbors, lastMove);
 	}
 
 	private List<Cell> potentialWinningCellsForCentralCell(Cell playerLastMove) {
@@ -67,17 +83,17 @@ public class WinningPatternFinder {
 		return _gameBoard.emptyCells();
 	}
 	
-	private List<Cell> potentialWinnignCellsIn(List<Cell> neighbors) {
+	private List<Cell> potentialWinnignCellsIn(List<Cell> neighbors, Cell lastMove) {
 		List<Cell> winningCells = new ArrayList<Cell>();
-		if (neighborsAreEmpty(neighbors) || neighborsFilledWithOpponent(neighbors))
+		if (neighborsAreEmpty(neighbors) || neighborsFilledWithOpponent(neighbors, lastMove))
 			return winningCells;
-		winningCells.add(potentialWinningCell(neighbors));
+		winningCells.add(potentialWinningCell(neighbors, lastMove));
 		
 		return winningCells;
 	}
 
-	private Cell potentialWinningCell(List<Cell> neighbors) {
-		if (neighbors.get(0).hasValue(PlayerMoves.X))
+	private Cell potentialWinningCell(List<Cell> neighbors, Cell lastMove) {
+		if (neighbors.get(0).hasValue(lastMove.getValue()))
 			return neighbors.get(1);
 		
 		return neighbors.get(0);
@@ -90,8 +106,13 @@ public class WinningPatternFinder {
 		return true;
 	}
 	
-	private boolean neighborsFilledWithOpponent(List<Cell> neighbors) {
-		return neighbors.get(0).hasValue(PlayerMoves.O) || neighbors.get(1).hasValue(PlayerMoves.O);
+	private boolean neighborsFilledWithOpponent(List<Cell> neighbors, Cell lastMove) {
+		boolean filledWithOpponent = false;
+		for (Cell neighbor : neighbors)
+			filledWithOpponent = filledWithOpponent || !neighbor.isEmpty() && 
+				!neighbor.hasValue(lastMove.getValue()); 
+			
+		return filledWithOpponent;
 	}
 	
 }

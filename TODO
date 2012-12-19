@@ -1,19 +1,10 @@
 TODO:
 
-* computer blocks winning potential cell for player! -> DONE
-* simple UI for this much functionality so far! -> DONE
-* WonChecker/EndGameChecker!
-* checking winning potentials for computer
+* checking winning potentials for computer (current)
+* EndGameChecker!
 * when there's no potential winning (just for now) randomly choose a cell to fill!
-* playerLastMove is null at the beginning of the game!
 
 * Clean up the WinningPatternFinder -> getPotentialWinningCellsInSlant() method!
 
 NOTE:
 	That technique for not letting the player win!
-
-DONE:
-	* checking the winning potentials for player! -> DONE
-	* eliminate the duplication of X and O everywhere! -> DONE
-	* Cell.isEmpty() method should be added -> DONE
-	* Cell.hasValue("X" or "O") should be added! -> DONE
