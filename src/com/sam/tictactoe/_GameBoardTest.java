@@ -76,4 +76,27 @@ public class _GameBoardTest {
 		assertFalse(emptyCells.contains(new Cell(0, 0)));
 	}
 	
+	@Test
+	public void getsAvailableCornerCells() {
+		_gameBoard.fillCell(0, 0, PlayerMoves.X);
+		_gameBoard.fillCell(2, 2, PlayerMoves.O);
+		
+		List<Cell> availableCornerCells = _gameBoard.availableCorners();
+
+		assertEquals(2, availableCornerCells.size());
+		assertTrue(availableCornerCells.contains(new Cell(2, 0)));
+		assertTrue(availableCornerCells.contains(new Cell(0, 2)));
+	}
+	
+	@Test
+	public void getsAdjacentCellsOfCentralCellWhichAreInItsRowAndColumn() {
+		List<Cell> adjacentCellsOfCentralCell = _gameBoard.adjacentCellsOfCentralCellInRowAndColumn();
+		
+		assertEquals(4, adjacentCellsOfCentralCell.size());
+		assertTrue(adjacentCellsOfCentralCell.contains(new Cell(1, 0)));
+		assertTrue(adjacentCellsOfCentralCell.contains(new Cell(1, 2)));
+		assertTrue(adjacentCellsOfCentralCell.contains(new Cell(0, 1)));
+		assertTrue(adjacentCellsOfCentralCell.contains(new Cell(2, 1)));
+	}
+	
 }

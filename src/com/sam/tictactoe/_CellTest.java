@@ -17,8 +17,8 @@ public class _CellTest {
 	
 	@Test
 	public void setsCoordinatesAtCreation() {
-		assertEquals(0, _cell.getX());
-		assertEquals(1, _cell.getY());
+		assertEquals(0, _cell.getRow());
+		assertEquals(1, _cell.getColumn());
 	}
 	
 	@Test
@@ -75,6 +75,15 @@ public class _CellTest {
 	public void knowsWhenIsInNotEqualSlant() {
 		Cell cell = new Cell(2, 0);
 		assertTrue(cell.isInNotEqualSlant());
+	}
+	
+	@Test
+	public void knowsWhenIsInCorner() {
+		Cell cell = new Cell(2, 0);
+		assertTrue(cell.isInCorner());
+		
+		cell = new Cell(1, 0);
+		assertFalse(cell.isInCorner());
 	}
 	
 	@Test

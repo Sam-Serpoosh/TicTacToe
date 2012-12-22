@@ -106,6 +106,14 @@ public class _WinningPatternFinderTest {
 	}
 	
 	@Test
+	public void whenCellIsNotInSlantThereIsNoPotentialWinningCellsForItInSlant() {
+		_gameBoard.fillCell(1, 2, PlayerMoves.O);
+		List<Cell> potentialWinningCells = _patternFinder.potentialWinningCellsInSlantBasedOn(_gameBoard.computerLastMove());
+		
+		assertEquals(0, potentialWinningCells.size());
+	}
+	
+	@Test
 	public void getsThePotentialWinningCellsForPlayerAfterTheLastMove() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		_gameBoard.fillCell(1, 1, PlayerMoves.O);

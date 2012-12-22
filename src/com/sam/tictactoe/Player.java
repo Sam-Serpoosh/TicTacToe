@@ -9,7 +9,7 @@ public class Player {
 	}
 	
 	public void play(Cell cell) {
-		_gameBoard.fillCell(cell.getX(), cell.getY(), PlayerMoves.X);
+		_gameBoard.fillCell(cell.getRow(), cell.getColumn(), PlayerMoves.X);
 	}
 	
 }

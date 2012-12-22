@@ -53,12 +53,15 @@ public class WinningPatternFinder {
 	}
 	
 	public List<Cell> potentialWinningCellsInSlantBasedOn(Cell lastMove) {
+		List<Cell> slantNeighbors = new ArrayList<Cell>();
 		if (lastMove.isInCenter())
-			return potentialWinningCellsForCentralCell(lastMove);
-		if (lastMove.isInEqualSlant())
-			return potentialWinningCellsInEqualSlant(lastMove);
+			slantNeighbors.addAll(potentialWinningCellsForCentralCell(lastMove));
+		else if (lastMove.isInEqualSlant())
+			slantNeighbors.addAll(potentialWinningCellsInEqualSlant(lastMove));
+		else if (lastMove.isInNotEqualSlant())
+			slantNeighbors.addAll(potentialWinningCellsInNotEqualSlant(lastMove));
 		
-		return potentialWinningCellsInNotEqualSlant(lastMove);
+		return slantNeighbors;
 	}
 
 	private List<Cell> potentialWinningCellsInNotEqualSlant(Cell lastMove) {

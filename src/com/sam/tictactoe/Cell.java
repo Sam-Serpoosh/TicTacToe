@@ -1,22 +1,22 @@
 package com.sam.tictactoe;
 
 public class Cell {
-	private int _x;
-	private int _y;
+	private int _row;
+	private int _column;
 	private String _value;
 	
-	public Cell(int x, int y) {
-		_x = x;
-		_y = y;
+	public Cell(int row, int column) {
+		_row = row;
+		_column = column;
 		_value = "";
 	}
 	
-	public int getX() {
-		return _x;
+	public int getRow() {
+		return _row;
 	}
 	
-	public int getY() {
-		return _y;
+	public int getColumn() {
+		return _column;
 	}
 	
 	public String getValue() {
@@ -36,11 +36,15 @@ public class Cell {
 	}
 	
 	public boolean isInEqualSlant() {
-		return getX() == getY();
+		return getRow() == getColumn();
 	}
 	
 	public boolean isInCenter() {
-		return getX() == 1 && getY() == 1;
+		return getRow() == 1 && getColumn() == 1;
+	}
+	
+	public boolean isInCorner() {
+		return Math.abs(getRow() - getColumn()) == 2 || (getRow() == getColumn() && getRow() != 1);
 	}
 	
 	@Override
@@ -48,16 +52,16 @@ public class Cell {
 		if (other instanceof Cell == false)
 			return false;
 		Cell otherCell = (Cell)other;
-		return otherCell.getX() == getX() && otherCell.getY() == getY();
+		return otherCell.getRow() == getRow() && otherCell.getColumn() == getColumn();
 	}
 	
 	@Override
 	public String toString() {
-		return getX() + ", " + getY() + ", " + getValue();  
+		return getRow() + ", " + getColumn() + ", " + getValue();  
 	}
 
 	public boolean isInNotEqualSlant() {
-		return Math.abs(getX() - getY()) == 2;
+		return Math.abs(getRow() - getColumn()) == 2;
 	}
 	
 }

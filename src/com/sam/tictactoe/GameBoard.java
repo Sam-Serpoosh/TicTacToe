@@ -70,6 +70,20 @@ public class GameBoard {
 			for (int column = 0; column < COLUMN_COUNT; column++)
 				_cells[row][column] = new Cell(row, column);
 	}
+	
+	public List<Cell> availableCorners() {
+		List<Cell> availableCornerCells = new ArrayList<Cell>();
+		if (cellAt(0, COLUMN_COUNT - 1).isEmpty())
+			availableCornerCells.add(cellAt(0, COLUMN_COUNT - 1));	
+		if (cellAt(0, 0).isEmpty())
+			availableCornerCells.add(cellAt(0, 0));
+		if (cellAt(ROW_COUNT - 1, 0).isEmpty())
+			availableCornerCells.add(cellAt(ROW_COUNT - 1, 0));
+		if (cellAt(ROW_COUNT - 1, COLUMN_COUNT - 1).isEmpty())
+			availableCornerCells.add(cellAt(ROW_COUNT - 1, COLUMN_COUNT - 1));
+		
+		return availableCornerCells;
+	}
 
 	public List<Cell> emptyCells() {
 		List<Cell> emptyCells = new ArrayList<Cell>();
@@ -79,6 +93,18 @@ public class GameBoard {
 					emptyCells.add(_cells[row][column]);
 		
 		return emptyCells;
+	}
+
+	public List<Cell> adjacentCellsOfCentralCellInRowAndColumn() {
+		List<Cell> adjacentCellsOfCentralCell = new ArrayList<Cell>();
+		int centralRow = cellAt(1, 1).getRow();
+		int centralColumn = cellAt(1, 1).getColumn();
+		adjacentCellsOfCentralCell.add(new Cell(centralRow - 1, centralColumn));
+		adjacentCellsOfCentralCell.add(new Cell(centralRow + 1, centralColumn));
+		adjacentCellsOfCentralCell.add(new Cell(centralRow, centralColumn - 1));
+		adjacentCellsOfCentralCell.add(new Cell(centralRow, centralColumn + 1));
+
+		return adjacentCellsOfCentralCell;
 	}
 	
 }

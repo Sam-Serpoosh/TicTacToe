@@ -13,7 +13,7 @@ public class CellNeighborsFinder {
 	public List<Cell> rowNeighborsOf(Cell cell) {
 		List<Cell> rowNeighbors = new ArrayList<Cell>();
 		
-		int row = cell.getX();
+		int row = cell.getRow();
 		for (int column = 0; column < GameBoard.COLUMN_COUNT; column++)
 			if (!_gameBoard.cellAt(row, column).equals(cell))
 				rowNeighbors.add(_gameBoard.cellAt(row, column));
@@ -24,7 +24,7 @@ public class CellNeighborsFinder {
 	public List<Cell> columnNeighborsOf(Cell cell) {
 		List<Cell> columnNeighbors = new ArrayList<Cell>();
 		
-		int column = cell.getY();
+		int column = cell.getColumn();
 		for (int row = 0; row < GameBoard.ROW_COUNT; row++)
 			if (!_gameBoard.cellAt(row, column).equals(cell))
 				columnNeighbors.add(_gameBoard.cellAt(row, column));
