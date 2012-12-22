@@ -23,35 +23,73 @@ public class ComputerPlayer {
 			fillTheBestAvailableCell();
 	}
 	
+	private void usePotentialWin() {
+		List<Cell> potentialWinningCells = _patternFinder.potentialWinningCellsForComputer();
+		Cell potentialCellForComputer = potentialWinningCells.get(0); 
+		_gameBoard.fillCell(potentialCellForComputer.getRow(), potentialCellForComputer.getColumn(), PlayerMoves.O);
+	}
+	
+	private void blockPotentialWin() {
+		List<Cell> potentialWinningCells = _patternFinder.potentialWinningCellsForPlayer();
+		Cell potentialCellForPlayer = potentialWinningCells.get(0); 
+		_gameBoard.fillCell(potentialCellForPlayer.getRow(), potentialCellForPlayer.getColumn(), PlayerMoves.O);
+	}
+	
 	public void fillTheBestAvailableCell() {
 		if (centerIsEmpty())
 			fillCenter();
-		else if (playerLastMoveWasAtCorner() && anyAvailableAdjacentCellToCenter()) {
+		else if (appropriateToGoWithAdjacentCellsToCenter())
 			fillAnAdjacentCell();
-		}
-		else if (anyAvailableCornerCells())
+		else if (appropriateToGoWithCornerCells())
 			fillCorner();
 		else
 			fillAnEmptyCellRandomly();
 	}
 	
-	private boolean playerLastMoveWasAtCorner() {
-		return _gameBoard.playerLastMove().isInCorner();
-	}
-	
-	private void fillAnAdjacentCell() {
-		List<Cell> adjacentCellsToCenter = _gameBoard.adjacentCellsOfCentralCellInRowAndColumn();
-		int cellSelector = _random.nextInt(adjacentCellsToCenter.size());
-		Cell adjacentCellToCenter = adjacentCellsToCenter.get(cellSelector);
-		_gameBoard.fillCell(adjacentCellToCenter.getRow(), adjacentCellToCenter.getColumn(), PlayerMoves.O);
-	}
-
 	private boolean centerIsEmpty() {
 		return _gameBoard.cellAt(1, 1).isEmpty();
 	}
 	
 	private void fillCenter() {
 		_gameBoard.fillCell(1, 1, PlayerMoves.O);
+	}
+	
+	private boolean appropriateToGoWithAdjacentCellsToCenter() {
+		return centerIsFilledWithComputer() && playerLastMoveWasAtCorner() && anyAvailableAdjacentCellToCenter();
+	}
+	
+	private boolean centerIsFilledWithComputer() {
+		return _gameBoard.cellAt(1, 1).hasValue(PlayerMoves.O);
+	}
+	
+	private boolean playerLastMoveWasAtCorner() {
+		return _gameBoard.playerLastMove().isInCorner();
+	}
+	
+	private boolean anyAvailableAdjacentCellToCenter() {
+		return _gameBoard.adjacentCellsOfCentralCellInRowAndColumn().size() > 0;
+	}
+	
+	private void fillAnAdjacentCell() {
+		fillOneCellRandomlyIn(_gameBoard.adjacentCellsOfCentralCellInRowAndColumn());
+	}
+
+	private boolean appropriateToGoWithCornerCells() {
+		return (anyAvailableCornerCells() && cornerCellInTheSameRowOfPlayerLastMoveExists()) ||
+			   (anyAvailableCornerCells() && cornerCellAtTheSameColumnOfPlayerLastMoveExists()) ||
+				_gameBoard.onlyCenterCellIsFilledByPlayer();
+	}
+	
+	private boolean anyAvailableCornerCells() {
+		return _gameBoard.availableCorners().size() > 0; 
+	}
+	
+	private boolean cornerCellInTheSameRowOfPlayerLastMoveExists() {
+		return _gameBoard.cornerCellsInTheRowOf(_gameBoard.playerLastMove()).size() > 0;
+	}
+	
+	private boolean cornerCellAtTheSameColumnOfPlayerLastMoveExists() {
+		return _gameBoard.cornerCellsInTheColumnOf(_gameBoard.playerLastMove()).size() > 0;
 	}
 	
 	/**
@@ -66,42 +104,37 @@ public class ComputerPlayer {
 	 * 
 	 */
 	
-	private boolean anyAvailableAdjacentCellToCenter() {
-		List<Cell> adjacentCellsToCenter = _gameBoard.adjacentCellsOfCentralCellInRowAndColumn();
-		return adjacentCellsToCenter.size() > 0;
-	}
-	
-	private boolean anyAvailableCornerCells() {
-		List<Cell> availableCorners = _gameBoard.availableCorners(); 
-		return availableCorners.size() > 0;
-	}
-	
 	private void fillCorner() {
-		List<Cell> availableCorners = _gameBoard.availableCorners();
-		int cellSelector = _random.nextInt(availableCorners.size());
-		Cell cornerCell = availableCorners.get(cellSelector);
-		_gameBoard.fillCell(cornerCell.getRow(), cornerCell.getColumn(), PlayerMoves.O);
+		if (_gameBoard.onlyCenterCellIsFilledByPlayer())
+			fillCornerAfterPlayerFilledCenter();
+		else if (cornerCellInTheSameRowOfPlayerLastMoveExists())
+			fillCornerInTheRowOfPlayerLastMove();
+		else if (cornerCellAtTheSameColumnOfPlayerLastMoveExists())
+			fillCornerInTheColumnOfPlayerLastMove();
+	}
+	
+	private void fillCornerAfterPlayerFilledCenter() {
+		fillOneCellRandomlyIn(_gameBoard.availableCorners());
+	}
+	
+	private void fillCornerInTheRowOfPlayerLastMove() {
+		fillOneCellRandomlyIn(_gameBoard.cornerCellsInTheRowOf(_gameBoard.playerLastMove()));
+	}
+	
+	private void fillCornerInTheColumnOfPlayerLastMove() {
+		fillOneCellRandomlyIn(_gameBoard.cornerCellsInTheColumnOf(_gameBoard.playerLastMove()));
 	}
 
-	private void blockPotentialWin() {
-		List<Cell> potentialWinningCells = _patternFinder.potentialWinningCellsForPlayer();
-		Cell potentialCellForPlayer = potentialWinningCells.get(0); 
-		_gameBoard.fillCell(potentialCellForPlayer.getRow(), potentialCellForPlayer.getColumn(), PlayerMoves.O);
-	}
-	
-	private void usePotentialWin() {
-		List<Cell> potentialWinningCells = _patternFinder.potentialWinningCellsForComputer();
-		Cell potentialCellForComputer = potentialWinningCells.get(0); 
-		_gameBoard.fillCell(potentialCellForComputer.getRow(), potentialCellForComputer.getColumn(), PlayerMoves.O);
-	}
-	
 	private void fillAnEmptyCellRandomly() {
 		List<Cell> emptyCells = _patternFinder.emptyCells();
 		if (emptyCells.size() == 0)
 			return;
-		int selectedCellPosition = _random.nextInt(emptyCells.size());
-		Cell selectedCell = emptyCells.get(selectedCellPosition);
-		_gameBoard.fillCell(selectedCell.getRow(), selectedCell.getColumn(), PlayerMoves.O);		
+		fillOneCellRandomlyIn(emptyCells);		
 	}
 	
+	private void fillOneCellRandomlyIn(List<Cell> cells) {
+		int cellSelector = _random.nextInt(cells.size());
+		Cell selectedCell = cells.get(cellSelector);
+		_gameBoard.fillCell(selectedCell.getRow(), selectedCell.getColumn(), PlayerMoves.O);
+	}
 }

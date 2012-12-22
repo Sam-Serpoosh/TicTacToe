@@ -59,6 +59,32 @@ public class _ComputerPlayerTest {
 		computerShouldFillOneCorner();
 	}
 	
+	@Test
+	public void fillCornerCellWhichIsInTheRowOfPlayerLastMove() {
+		_gameBoard.fillCell(0, 2, PlayerMoves.X);
+		_gameBoard.fillCell(1, 1, PlayerMoves.O);
+		_gameBoard.fillCell(2, 1, PlayerMoves.X);
+		
+		_computerPlayer.fillTheBestAvailableCell();
+		
+		assertTrue(_gameBoard.cellAt(2, 0).hasValue(PlayerMoves.O) || 
+				   _gameBoard.cellAt(2, 2).hasValue(PlayerMoves.O));
+		
+	}
+	
+	@Test
+	public void fillCornerCellWhichIsInTheColumnOfPlayerLastMove() {
+		_gameBoard.fillCell(0, 2, PlayerMoves.X);
+		_gameBoard.fillCell(1, 1, PlayerMoves.O);
+		_gameBoard.fillCell(1, 0, PlayerMoves.X);
+		
+		_computerPlayer.fillTheBestAvailableCell();
+		
+		assertTrue(_gameBoard.cellAt(0, 0).hasValue(PlayerMoves.O) || 
+				   _gameBoard.cellAt(2, 0).hasValue(PlayerMoves.O));
+		
+	}
+	
 	private void computerShouldFillOneAdjacentOfCenter() {
 		boolean oneAdjacentOfCenterIsFilled = _gameBoard.cellAt(1, 0).hasValue(PlayerMoves.O) || 
 											  _gameBoard.cellAt(1, 2).hasValue(PlayerMoves.O) ||

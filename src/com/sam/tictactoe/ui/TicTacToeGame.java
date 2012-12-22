@@ -29,6 +29,7 @@ public class TicTacToeGame {
 		if (!playerWon)
 			_computerPlayer.play();
 		checkComputerWon();
+		checkIfTheGameTied();
 		_gameBoardFrame.drawGameBoard();
 	}
 	
@@ -49,6 +50,13 @@ public class TicTacToeGame {
 		}
 	}
 	
+	
+	private static void checkIfTheGameTied() {
+		if (_gameBoard.isFull()) {
+			_gameBoardFrame.showTiedMessage();
+			resetGame();
+		}
+	}
 	public static void resetGame() {
 		_gameBoard.reset();
 		_gameBoardFrame.drawGameBoard();

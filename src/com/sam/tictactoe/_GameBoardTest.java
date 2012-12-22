@@ -36,6 +36,21 @@ public class _GameBoardTest {
 	}
 	
 	@Test
+	public void knowsWhenTheBoardIsFull() {
+		for (int row = 0; row < GameBoard.ROW_COUNT; row++)
+			for (int column = 0; column < GameBoard.COLUMN_COUNT; column++)
+				_gameBoard.fillCell(row, column, PlayerMoves.X);
+		
+		assertTrue(_gameBoard.isFull());
+	}
+	
+	@Test
+	public void knowsWhenOnleCentralCellFilledByPlayer() {
+		_gameBoard.fillCell(1, 1, PlayerMoves.X);
+		assertTrue(_gameBoard.onlyCenterCellIsFilledByPlayer());
+	}
+	
+	@Test
 	public void canFillCellWithXOrO() {
 		_gameBoard.fillCell(0, 0, PlayerMoves.X);
 		assertEquals(PlayerMoves.X, _gameBoard.valueOf(0, 0));

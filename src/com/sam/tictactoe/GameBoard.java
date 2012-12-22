@@ -33,6 +33,14 @@ public class GameBoard {
 		return true;
 	}
 	
+	public boolean isFull() {
+		return emptyCells().size() == 0;
+	}
+	
+	public boolean onlyCenterCellIsFilledByPlayer() {
+		return emptyCells().size() == 8 && cellAt(1, 1).hasValue(PlayerMoves.X);
+	}
+	
 	public Cell cellAt(int row, int column) {
 		return _cells[row][column];
 	}
@@ -105,6 +113,26 @@ public class GameBoard {
 		adjacentCellsOfCentralCell.add(new Cell(centralRow, centralColumn + 1));
 
 		return adjacentCellsOfCentralCell;
+	}
+
+	public List<Cell> cornerCellsInTheRowOf(Cell cell) {
+		List<Cell> cornerCells = availableCorners();
+		List<Cell> cornerCellsInTheRowOfPlayerLastMove = new ArrayList<Cell>();
+		for (Cell corner : cornerCells)
+			if (corner.getRow() == cell.getRow())
+				cornerCellsInTheRowOfPlayerLastMove.add(corner);
+		
+		return cornerCellsInTheRowOfPlayerLastMove;
+	}
+
+	public List<Cell> cornerCellsInTheColumnOf(Cell cell) {
+		List<Cell> cornerCells = availableCorners();
+		List<Cell> cornerCellsInTheColumnOfPlayerLastMove = new ArrayList<Cell>();
+		for (Cell corner : cornerCells)
+			if (corner.getColumn() == cell.getColumn())
+				cornerCellsInTheColumnOfPlayerLastMove.add(corner);
+		
+		return cornerCellsInTheColumnOfPlayerLastMove;
 	}
 	
 }

@@ -33,6 +33,10 @@ public class TicTacToeFrame extends JFrame {
 		JOptionPane.showMessageDialog(this, "Sorry, You Lost!");
 	}
 	
+	public void showTiedMessage() {
+		JOptionPane.showMessageDialog(this, "We tied!");
+	}
+	
 	public void drawGameBoard() {
 		getContentPane().removeAll();
 		getContentPane().add(new GameBoardPanel(getGameBoard()), BorderLayout.CENTER);
