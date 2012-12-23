@@ -4,6 +4,6 @@ This is an implementation of famous and traditional Tic Tac Toe game in Java! It
 
 There are many implementations of this game available but most of them are messy and very hard to understand! The main purpose of this was implementing this game with SOLID principles and separation of concerns and it's written completely with  Test-Driven-Design approach! I tried to make the code very clean and gorgeous :)
 
-It's totally separated form UI and You can get the code for the logic of the game and have ANY UI you like! All you need is the *"tictactoe"* package!
+It's totally separated form UI and You can get the code for the logic of the game and have ANY UI you like! All you need is the *tictactoe* package!
 
 I hope you like it!
